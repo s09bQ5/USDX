@@ -3,16 +3,7 @@ language: generic
 
 matrix:
   include:
-    - os: linux
-      env: LAZ_VER=1.6 LAZ_ENV=wine WINEARCH=win32 LAZ_OPT="--os=win32 --cpu=i386"
-    - os: linux
-      dist: trusty
     - os: osx
-
-env:
-  global:
-    - WINEPREFIX=~/.winelaz
-    - DISPLAY=:99.0
 
 before_install:
   - tools/travis/before_install.sh

@@ -1,27 +1,22 @@
-#!/bin/sh
+#!/bin/bash
 
-if [ -n "$LAZ_VER" ]; then
-    # Lazarus build (with wine)
+id
+pwd
+echo ======= Environment:
+set
+echo
+p=$PATH
+while [ -n "$p" ] ; do
+	d=${p%%:*}
+	echo ======= $d:
+	ls -l $d
+	p=${p#$d}
+	p=${p#:}
+done
+echo
+echo ======= pkg-config:
+pkg-config --list-all | while read a b ; do
+	echo $a `pkg-config --modversion $a` `pkg-config --cflags --libs $a`
+done
 
-    # Start virtual display server
-    sh /etc/init.d/xvfb start
-
-elif [ "$TRAVIS_OS_NAME" = "osx" ]; then
-    # OSX build
-
-    brew tap caskroom/cask
-    brew tap homebrew/versions
-    brew update
-
-else
-    # Linux build
-
-    # Adding fpc repository
-    sudo add-apt-repository -y ppa:ok2cqr/lazarus
-
-    # ffmpeg (2.4) version for trusty
-    # sudo add-apt-repository -y ppa:kirillshkrogalev/ffmpeg-next
-
-    sudo apt-get update
-
-fi
+exit 1
