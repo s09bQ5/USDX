@@ -88,47 +88,6 @@ modules:
     - -DWITH_IMGCODEC_PXM=OFF
     - -DWITH_IMGCODEC_PFM=OFF
 
-- name: freepascal
-  sources:
-# binaries for sparc, mips, and powerpc exist as well
-# aarch64 is supported in SVN trunk and has been backported by Debian
-  - type: archive
-    only-arches:
-    - i386
-    url: https://sourceforge.net/projects/freepascal/files/Linux/3.0.4/fpc-3.0.4.i386-linux.tar
-    mirror-urls:
-    - ftp://ftp.hu.freepascal.org/pub/fpc/dist/3.0.4/i386-linux/fpc-3.0.4.i386-linux.tar
-    - ftp://mirror.freemirror.org/pub/fpc/dist/3.0.4/i386-linux/fpc-3.0.4.i386-linux.tar
-    sha256: aa6da9a58d155bbaa71aaa7f414d64b02b3e450dc23eed7c161eac6d547fae17
-
-  - type: archive
-    only-arches:
-    - arm
-    url: https://sourceforge.net/projects/freepascal/files/Linux/3.0.4/fpc-3.0.4.arm-linux-eabihf-raspberry.tar
-    mirror-urls:
-    - ftp://ftp.hu.freepascal.org/pub/fpc/dist/3.0.4/arm-linux/fpc-3.0.4.arm-linux-eabihf-raspberry.tar
-    - ftp://mirror.freemirror.org/pub/fpc/dist/3.0.4/arm-linux/fpc-3.0.4.arm-linux-eabihf-raspberry.tar
-    sha256: e940df47f6fc80ab7c74cd118eadef5ff50d7aac7abd5e09392578b809400f65
-
-  - type: archive
-    only-arches:
-    - x86_64
-    url: https://sourceforge.net/projects/freepascal/files/Linux/3.0.4/fpc-3.0.4.x86_64-linux.tar
-    mirror-urls:
-    - ftp://ftp.hu.freepascal.org/pub/fpc/dist/3.0.4/x86_64-linux/fpc-3.0.4.x86_64-linux.tar
-    - ftp://mirror.freemirror.org/pub/fpc/dist/3.0.4/x86_64-linux/fpc-3.0.4.x86_64-linux.tar
-    sha256: 7e965baf13c9822a0ff39e7bbfa040bd5599e94d0f3338f1ac4efa989081fd77
-
-  - type: shell
-    commands:
-# We can use neither /etc/fpc.cfg nor ~/.fpc.cfg, but luckily fpc also looks below $PREFIX
-    - sed -i '/samplecfg/s%$% "$PREFIX/lib/fpc/etc"%' install.sh
-  buildsystem: simple
-  build-commands:
-  - ( echo /var/tmp/fpc ; yes N ) | ./install.sh
-# On x86-64 and ppc64 fpc looks in /usr/lib64 instead of /usr/lib
-  - echo -Fl/usr/lib >> /var/tmp/fpc/lib/fpc/etc/fpc.cfg
-
 - name: glm
   sources:
   - type: archive
@@ -228,6 +187,47 @@ modules:
   buildsystem: autotools
   config-opts:
   - --disable-static
+
+- name: freepascal
+  sources:
+# binaries for sparc, mips, and powerpc exist as well
+# aarch64 is supported in SVN trunk and has been backported by Debian
+  - type: archive
+    only-arches:
+    - i386
+    url: https://sourceforge.net/projects/freepascal/files/Linux/3.0.4/fpc-3.0.4.i386-linux.tar
+    mirror-urls:
+    - ftp://ftp.hu.freepascal.org/pub/fpc/dist/3.0.4/i386-linux/fpc-3.0.4.i386-linux.tar
+    - ftp://mirror.freemirror.org/pub/fpc/dist/3.0.4/i386-linux/fpc-3.0.4.i386-linux.tar
+    sha256: aa6da9a58d155bbaa71aaa7f414d64b02b3e450dc23eed7c161eac6d547fae17
+
+  - type: archive
+    only-arches:
+    - arm
+    url: https://sourceforge.net/projects/freepascal/files/Linux/3.0.4/fpc-3.0.4.arm-linux-eabihf-raspberry.tar
+    mirror-urls:
+    - ftp://ftp.hu.freepascal.org/pub/fpc/dist/3.0.4/arm-linux/fpc-3.0.4.arm-linux-eabihf-raspberry.tar
+    - ftp://mirror.freemirror.org/pub/fpc/dist/3.0.4/arm-linux/fpc-3.0.4.arm-linux-eabihf-raspberry.tar
+    sha256: e940df47f6fc80ab7c74cd118eadef5ff50d7aac7abd5e09392578b809400f65
+
+  - type: archive
+    only-arches:
+    - x86_64
+    url: https://sourceforge.net/projects/freepascal/files/Linux/3.0.4/fpc-3.0.4.x86_64-linux.tar
+    mirror-urls:
+    - ftp://ftp.hu.freepascal.org/pub/fpc/dist/3.0.4/x86_64-linux/fpc-3.0.4.x86_64-linux.tar
+    - ftp://mirror.freemirror.org/pub/fpc/dist/3.0.4/x86_64-linux/fpc-3.0.4.x86_64-linux.tar
+    sha256: 7e965baf13c9822a0ff39e7bbfa040bd5599e94d0f3338f1ac4efa989081fd77
+
+  - type: shell
+    commands:
+# We can use neither /etc/fpc.cfg nor ~/.fpc.cfg, but luckily fpc also looks below $PREFIX
+    - sed -i '/samplecfg/s%$% "$PREFIX/lib/fpc/etc"%' install.sh
+  buildsystem: simple
+  build-commands:
+  - ( echo /var/tmp/fpc ; yes N ) | ./install.sh
+# On x86-64 and ppc64 fpc looks in /usr/lib64 instead of /usr/lib
+  - echo -Fl/usr/lib >> /var/tmp/fpc/lib/fpc/etc/fpc.cfg
 
 - name: ultrastardx
   sources:
