@@ -222,7 +222,7 @@ modules:
   - type: shell
     commands:
 # We can use neither /etc/fpc.cfg nor ~/.fpc.cfg, but luckily fpc also looks below $PREFIX
-    - sed -i '/samplecfg/s%$% "$PREFIX/lib/fpc/etc"%' install.sh
+    - sed -i '/\/samplecfg/s%LIBDIR"%& "$PREFIX/lib/fpc/etc"%' install.sh
   buildsystem: simple
   build-commands:
   - ( echo /var/tmp/fpc ; yes N ) | ./install.sh
