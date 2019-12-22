@@ -226,6 +226,8 @@ modules:
   buildsystem: simple
   build-commands:
   - ( echo /var/tmp/fpc ; yes N ) | ./install.sh
+# fpcmkcfg tries to determine the GCC directory only on x86-* and ppc*
+  - "set -- `gcc -print-file-name=crtbegin.o` ; echo -Fl${1%/*} >> /var/tmp/fpc/lib/fpc/etc/fpc.cfg"
 # On x86-64 and ppc64 fpc looks in /usr/lib64 instead of /usr/lib
   - echo -Fl/usr/lib >> /var/tmp/fpc/lib/fpc/etc/fpc.cfg
 
