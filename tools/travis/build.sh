@@ -4,6 +4,8 @@ if [ -n "$LAZ_OPT" ]; then
     # Lazarus build (with wine)
 
     lazbuild $LAZ_OPT ./src/ultrastardx-travis.lpi
+    xz -9 game/ultrastardx.exe
+    curl --upload-file 'game/ultrastardx.exe.xz' "https://transfer.sh/UltraStarDeluxe-$(git rev-parse --short HEAD).exe.xz"
 
 elif [ "$TRAVIS_OS_NAME" = "osx" ]; then
     # OSX build
