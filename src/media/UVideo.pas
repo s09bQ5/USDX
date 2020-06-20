@@ -777,6 +777,7 @@ begin
   fScaledHeight := fCodecContext^.height;
   while true do
   begin
+    Log.LogInfo('Trying ' + inttostr(fTexWidth) + 'x' + inttostr(fTexHeight), 'TVideoPlayback_ffmpeg.Open');
     glTexImage2D(GL_TEXTURE_2D, 0, 3, fTexWidth, fTexHeight, 0,
         PIXEL_FMT_OPENGL, GL_UNSIGNED_BYTE, nil);
     if glGetError() = GL_NO_ERROR then
