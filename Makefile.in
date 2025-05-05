@@ -479,7 +479,7 @@ macosx-dmg: macosx-standalone-app
 #	/bin/cp ultrastardx/icons/UltraStarDeluxeVolumeIcon.icns /Volumes/UltraStarDeluxe/.VolumeIcon.icns
 #	/Developer/Tools/SetFile -a C /Volumes/UltraStarDeluxe/.VolumeIcon.icns /Volumes/UltraStarDeluxe
 	codesign --force --deep --sign - /Volumes/UltraStarDeluxe/UltraStarDeluxe.app
-	$(HDIUTIL) detach /Volumes/UltraStarDeluxe
+	n=0; while [ $$n -lt 10 ] && ! $(HDIUTIL) detach /Volumes/UltraStarDeluxe ; do sleep 1 ; n=$$((n+1)) ; done
 	$(HDIUTIL) convert UltraStarDeluxe.sparseimage -format UDBZ -o UltraStarDeluxe.dmg
 	$(RM) UltraStarDeluxe.sparseimage
 
