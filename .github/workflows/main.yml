@@ -85,9 +85,24 @@ jobs:
           else
             echo "arch=ARM" >> $GITHUB_ENV
           fi
+      - name: Cache brew
+        uses: actions/cache@v4
+        with:
+          key: brew-cache-${{ matrix.os }}
+          path: |
+            /Users/runner/Library/Caches/Homebrew
       - name: Install Dependencies
         run: |
+          find ~/Library/Caches/Homebrew -type f -exec touch -a -t 197101010000 '{}' ';'
+          touch before-brew-install
           brew install fpc sdl2 sdl2_image automake portaudio lua ffmpeg
+          echo Will delete:
+          find ~/Library/Caches/Homebrew -type f -not '(' -anewer before-brew-install -or -cnewer before-brew-install ')'
+          find ~/Library/Caches/Homebrew -type f -not '(' -anewer before-brew-install -or -cnewer before-brew-install ')' -delete
+          rm before-brew-install
+          find -d ~/Library/Caches/Homebrew -type d -empty -delete
+          echo Remaining to be cached:
+          find ~/Library/Caches/Homebrew
       - name: Build
         run: |
           ./autogen.sh
