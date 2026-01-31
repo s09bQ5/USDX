@@ -92,7 +92,7 @@ task_cmake() {
 	rm -rf build
 	mkdir -p build
 	cd build
-	hide ../bootstrap --parallel=$(nproc) --prefix="$PREFIX" -- -DCMAKE_INSTALL_LIBDIR:PATH="lib"
+	hide ../bootstrap --parallel=$(nproc) --prefix="$PREFIX" -- -DCMAKE_INSTALL_LIBDIR:PATH="lib" -DCMAKE_USE_OPENSSL=OFF
 	hide make $makearg
 	hide make install
 	cd ..
@@ -580,11 +580,11 @@ if [ "$1" == "all_deps" ]; then
 	clean_prefix
 	echo
 
+	task_cmake
+	echo
 	task_openssl
 	echo
 	task_python
-	echo
-	task_cmake
 	echo
 	task_ninja
 	echo
